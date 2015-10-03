@@ -1,5 +1,5 @@
 {
-  "name"         : "nodeJSCrawler",
+  "name"         : "nodeJSCrawl",
   "version"      : "0.0.1",
   "description"  : "Scrape le web.",
   "main"         : "server.js",
