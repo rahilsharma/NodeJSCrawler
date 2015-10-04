@@ -6,42 +6,8 @@ var fs = require('fs');
 var request = require('request');
 var cheerio = require('cheerio');
 var app     = express();
-
-app.get('/scrape', function(req, res){
-    // The URL we will scrape from - in our example Anchorman 2.
-
-    url = 'http://www.asklaila.com/search/Mumbai/-/Tailor/?searchNearby=false';
-
-    // The structure of our request call
-    // The first parameter is our URL
-    // The callback function takes 3 parameters, an error, response status code and the html
-
-    request(url, function(error, responses, html){
-
-        // First we'll check to make sure no errors occurred when making the request
-
-        if(!error){
-            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
-console.log(html);
-            // Finally, we'll define the variables we're going to capture
-
-           // var title, release, rating;
-           // var json = { title : "", release : "", rating : ""};
-        }
-        else{
-            //console.log(error);
-        }
-    }).on('response', function(response) {
-          //  console.log(response) // 200
-           // console.log(response.headers['content-type']) // 'image/png'
-        })
-
-
-
-    }
-
-)
+var jquery=require('jquery');
+var globalArray=[];
 
 
 //app.listen('8081')
@@ -57,13 +23,13 @@ var options = {
 
 request(options, function callback(error, response, body) {
 //console.log(body);
-    var cheerio = require('cheerio'),
+   // var cheerio = require('cheerio'),
         $ = cheerio.load(body);
 
 var l=$('.col-xs-10.col-sm-12.col-md-12.col-lg-12.pad0.topSpaceMargin').children().closest('a');
-
-    jQuery.each(l,function(index, value){
-       console.log(index + " : " + value);
-    })
-   //console.log(l);
+    var len= l.length;
+for( var i=0;i< l.length;i++){
+        console.log(l[i].attribs);
+    }
+ //  console.log(l);
 });
