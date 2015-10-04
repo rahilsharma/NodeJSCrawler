@@ -10,12 +10,13 @@ var app     = express();
 app.get('/scrape', function(req, res){
     // The URL we will scrape from - in our example Anchorman 2.
 
-    url = 'http://google.com';
+    url = 'http://www.asklaila.com/search/Mumbai/-/Tailor/?searchNearby=false';
 
     // The structure of our request call
     // The first parameter is our URL
     // The callback function takes 3 parameters, an error, response status code and the html
-    request(url, function(error, response, html){
+
+    request(url, function(error, responses, html){
 
         // First we'll check to make sure no errors occurred when making the request
 
@@ -25,15 +26,44 @@ app.get('/scrape', function(req, res){
 console.log(html);
             // Finally, we'll define the variables we're going to capture
 
-            var title, release, rating;
-            var json = { title : "", release : "", rating : ""};
+           // var title, release, rating;
+           // var json = { title : "", release : "", rating : ""};
         }
         else{
-            console.log(error);
+            //console.log(error);
         }
-    })
-})
+    }).on('response', function(response) {
+          //  console.log(response) // 200
+           // console.log(response.headers['content-type']) // 'image/png'
+        })
 
-app.listen('8081')
-console.log('Magic happens on port 8081');
-exports = module.exports = app;
+
+
+    }
+
+)
+
+
+//app.listen('8081')
+//console.log('Magic happens on port 8081');
+//exports = module.exports = app;
+
+var options = {
+    url: 'http://www.asklaila.com/search/Mumbai/-/Tailor/?searchNearby=false',
+    headers: {
+        'User-Agent': 'Mozilla'
+    }
+};
+
+request(options, function callback(error, response, body) {
+//console.log(body);
+    var cheerio = require('cheerio'),
+        $ = cheerio.load(body);
+
+var l=$('.col-xs-10.col-sm-12.col-md-12.col-lg-12.pad0.topSpaceMargin').children().closest('a');
+
+    jQuery.each(l,function(index, value){
+       console.log(index + " : " + value);
+    })
+   //console.log(l);
+});
