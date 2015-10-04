@@ -8,28 +8,39 @@ var cheerio = require('cheerio');
 var app     = express();
 var jquery=require('jquery');
 var globalArray=[];
+var tempUrl1="http://www.asklaila.com/search/Mumbai/-/Tailor/";
+var tempUrl2="?searchNearby=false";
+var chngvr=["","10","20","30","40","50","60","70","80","90","100","110","120","130","140","150","160","170","180","190"];
 
-
-//app.listen('8081')
-//console.log('Magic happens on port 8081');
-//exports = module.exports = app;
-
-var options = {
-    url: 'http://www.asklaila.com/search/Mumbai/-/Tailor/?searchNearby=false',
-    headers: {
-        'User-Agent': 'Mozilla'
-    }
-};
-
-request(options, function callback(error, response, body) {
-//console.log(body);
-   // var cheerio = require('cheerio'),
+//customize the url and loop thru all 20 pages to store for later use
+for(var kk=0;kk<chngvr.length;kk++){
+   // console.log('cm here');
+    var urls=tempUrl1 + chngvr[kk]+ tempUrl2;
+    var options = {
+      //  url: 'http://www.asklaila.com/search/Mumbai/-/Tailor/?searchNearby=false',
+        url:urls,
+        headers: {
+            'User-Agent': 'Mozilla'
+        }
+    };
+//now just need to store all the links for later use
+    request(options, function callback(error, response, body) {
+       // console.log('cm here');
         $ = cheerio.load(body);
+        var l=$('.col-xs-10.col-sm-12.col-md-12.col-lg-12.pad0.topSpaceMargin').children().closest('a');
+        var len= l.length;
+        for( var i=0;i< l.length;i++){
+            globalArray.push(l[i].attribs.href)
+             console.log(l[i].attribs.href);
+        }
+    });
+    //if (kk=chngvr.length-1){
+    //    //callback function
+    //   printglobalArray();
+    //}
+}
+//function printglobalArray(){
+//    console.log(globalArray);
+//
+//}
 
-var l=$('.col-xs-10.col-sm-12.col-md-12.col-lg-12.pad0.topSpaceMargin').children().closest('a');
-    var len= l.length;
-for( var i=0;i< l.length;i++){
-        console.log(l[i].attribs);
-    }
- //  console.log(l);
-});
