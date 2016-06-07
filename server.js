@@ -33,13 +33,7 @@ for(var kk=0;kk<chngvr.length;kk++){
             globalArray.push(l[i].attribs.href)
             // console.log(l[i].attribs.href);
         }
-            //if (kk=chngvr.length-1){
-            //   //callback function
-            //    console.log(kk);
-            //  printglobalArray();
-            //}
-
-    }
+         }
 
     );
 
